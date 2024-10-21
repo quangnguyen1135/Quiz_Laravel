@@ -83,23 +83,16 @@
             <h3 class="text-lg font-semibold mb-4">Or continue with</h3>
             <section class="flex flex-col space-y-3">
                 <!-- Continue with Google -->
-                <button
-                    class="flex items-center justify-between px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:shadow-md">
-                    <span class="flex items-center space-x-4">
-                        <img src="https://cf.quizizz.com/img/logos/google-logo-1.png" alt="Google" class="w-5 h-5">
-                        <span class="font-semibold">Continue with Google</span>
-                    </span>
-                    <i class="fa fa-arrow-right"></i>
-                </button>
-                <!-- Continue with Email -->
-                <button
-                    class="flex items-center justify-between px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:shadow-md">
-                    <span class="flex items-center space-x-4">
-                        <img src="https://cf.quizizz.com/image/envelope-regular.png" alt="Email" class="w-5 h-5">
-                        <span class="font-semibold">Continue with Email</span>
-                    </span>
-                    <i class="fa fa-arrow-right"></i>
-                </button>
+                <a href="/login/google">
+                    <button
+                        class="flex items-center justify-between px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:shadow-md">
+                        <span class="flex items-center space-x-4">
+                            <img src="https://cf.quizizz.com/img/logos/google-logo-1.png" alt="Google" class="w-5 h-5">
+                            <span class="font-semibold">Continue with Google</span>
+                        </span>
+                        <i class="fa fa-arrow-right"></i>
+                    </button>
+                </a>
                 <!-- Continue with Facebook -->
                 <button
                     class="flex items-center justify-between px-4 py-2 border border-gray-300 rounded-md shadow-sm hover:shadow-md">
@@ -161,115 +154,164 @@
 </div>
 
 
-<div class="main-navigation-container h-full main-nav">
-    <div class="main-navigation flex flex-col h-full bg-light-3 border-r border-light-1 max-w-min filter-box-shadow">
-        <a href="/" class="logo md:block" aria-label="Quizizz" title="Quizizz">
-            <img class="object-contain w-20 h-full p-1 mr-auto"
-                src="{{ asset('/') }}asset/img/quizizz_logos/purple-brandmark-600x164.png" alt="logo">
-        </a>
-        <div class="user-details">
-            <div class="pb-2 p-4 user-section">
-                <div class="relative min-w-40 max-w-40">
-                    <div class="flex items-center mb-3">
-                        <a href="/profile/6530d670aa3baa53fa6a0f02"
-                            class="inline-block text-sm font-semibold text-dark-2 cursor-pointer">
-                            @if (Auth::check())
-                                <div class="inline-block align-bottom">
-                                    Mr. {{ auth()->user()->name }}
-                                </div>
-                        </a>
-                        <div
-                            class="lozenge items-center inline-flex text-tn font-semibold rounded px-1 bg-dark-5% text-dark-3">
-                            Tài khoản cơ bản
-                        </div>
-                    @else
-                        <div class="inline-block align-bottom">
-                            Có một tài khoản?
-                            <a href="#" class="open-modal-button">
-                                <button
-                                    class="transition-colors duration-200 ease-in-out flex items-center justify-center px-3 py-1 text-xs font-semibold h-6 base bg-lilac-faded text-lilac hover:text-lilac-light active:text-lilac-dark rounded secondary relative min-w-max mb-4"
-                                    type="button" translate="no">Đăng nhập
-                                </button>
+
+@if (!request()->is('courses/*') && !request()->is('courses'))
+
+    <div class="main-navigation-container h-full main-nav">
+        <div
+            class="main-navigation flex flex-col h-full bg-light-3 border-r border-light-1 max-w-min filter-box-shadow">
+            <a href="/" class="logo md:block" aria-label="Quizizz" title="Quizizz">
+                <img class="object-contain w-20 h-full p-1 mr-auto"
+                    src="{{ asset('/') }}asset/img/quizizz_logos/purple-brandmark-600x164.png" alt="logo">
+            </a>
+            <div class="user-details">
+                <div class="pb-2 p-4 user-section">
+                    <div class="relative min-w-40 max-w-40">
+                        <div class="flex items-center mb-3">
+                            <a href="/profile/6530d670aa3baa53fa6a0f02"
+                                class="inline-block text-sm font-semibold text-dark-2 cursor-pointer">
+                                @if (Auth::check())
+                                    <div class="inline-block align-bottom">
+                                        Mr. {{ auth()->user()->name }}
+                                    </div>
                             </a>
-                        </div>
-                        @endif
+                            <div
+                                class="lozenge items-center inline-flex text-tn font-semibold rounded px-1 bg-dark-5% text-dark-3">
+                                Tài khoản cơ bản
+                            </div>
+                        @else
+                            <div class="inline-block align-bottom">
+                                Có một tài khoản?
+                                <a href="#" class="open-modal-button">
+                                    <button
+                                        class="transition-colors duration-200 ease-in-out flex items-center justify-center px-3 py-1 text-xs font-semibold h-6 base bg-lilac-faded text-lilac hover:text-lilac-light active:text-lilac-dark rounded secondary relative min-w-max mb-4"
+                                        type="button" translate="no">Đăng nhập
+                                    </button>
+                                </a>
+                            </div>
+@endif
 
-                    </div>
-                </div>
-                <button
-                    class="transition-colors duration-200 ease-in-out flex items-center justify-center px-2 py-1.5 text-xs font-semibold h-full bg-super-20% text-super-dark hover:text-super-light active:text-super-dark rounded-2xl">
-                    Nâng cấp ngay bây giờ
-                </button>
-            </div>
-            <div class="mb-4 relative block w-full" style="padding-left: 0.5rem; padding-right: 1.5rem;">
-                <a href="/create_quizz"
-                    
-                        class="transition-colors duration-200 ease-in-out flex flex items-center justify-center px-7.5 py-2.5 text-lg font-semibold q-shadow mb-1 h-10 base bg-lilac text-light-3 hover:bg-lilac-light active:bg-lilac-dark rounded-lg primary relative min-w-max w-full open-modal-button"
-                        data-target="#modal-layer-2">
-                        <i class="flex items-center fas fa-sparkles mr-2" style="font-size: 16px;"></i>
-                        <span class="title" title="Tạo mới">Tạo mới</span>
-                    
-
-                </a>
-            </div>
-        </div>
-        <div class="sidebar-navigation flex flex-col overflow-y-auto justify-between h-full">
-            <a href="/admin"
-                class="link flex items-center pl-4 whitespace-nowrap w-full hover:bg-light-1 cursor-pointer py-2 text-dark-4">
-                <i class="flex items-center fal fa-map-marked-alt" style="font-size: 12px;"></i>
-                <span class="text-sm whitespace-nowrap pl-1">Khám phá</span>
-            </a>
-            <a href="/my-quizzes"
-                class="link flex items-center pl-4 whitespace-nowrap w-full hover:bg-light-1 cursor-pointer py-2 text-dark-4 open-modal-button"
-                data-target="#modal-layer-2">
-                <i class="flex items-center fal fa-books" style="font-size: 12px;"></i>
-                <span class="text-sm whitespace-nowrap pl-1">Thư viện của tôi</span>
-            </a>
-
-            <a href="/admin/reports"
-                class="link flex items-center pl-4 whitespace-nowrap w-full hover:bg-light-1 cursor-pointer py-2 text-dark-4">
-                <i class="flex items-center fal fa-analytics" style="font-size: 12px;"></i>
-                <span class="text-sm whitespace-nowrap pl-1">Báo cáo</span>
-            </a>
-            <a href="/admin/classes"
-                class="link flex items-center pl-4 whitespace-nowrap w-full hover:bg-light-1 cursor-pointer py-2 text-dark-4">
-                <i class="flex items-center fal fa-users-class" style="font-size: 12px;"></i>
-                <span class="text-sm whitespace-nowrap pl-1">Các lớp học</span>
-            </a>
-            <a href="/settings"
-                class="link flex items-center pl-4 whitespace-nowrap w-full hover:bg-light-1 cursor-pointer py-2 text-dark-4">
-                <i class="flex items-center fal fa-cog" style="font-size: 12px;"></i>
-                <span class="text-sm whitespace-nowrap pl-1">Cài đặt</span>
-            </a>
-            @auth
-                <button type="button" onclick="document.getElementById('logout-form').submit();"
-                    class="link flex items-center pl-4 whitespace-nowrap w-full hover:bg-light-1 cursor-pointer py-2 text-dark-4"
-                    aria-label="Đăng xuất">
-                    <div class="flex items-center justify-center w-6">
-                        <i class="flex items-center far fa-sign-out" style="font-size: 12px;"></i>
-                    </div>
-                    <span class="text-sm whitespace-nowrap pl-1">Đăng xuất</span>
-                </button>
-
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            @endauth
-
-            <button aria-label="Ít hơn"
-                class="link flex w-full items-center py-2 pl-4 hover:bg-dark-5% cursor-pointer text-dark-3"
-                data-testid="sidebar-desktop-more-button" type="button">
-                <i class="flex items-center fal fa-chevron-down" style="font-size: 12px;"></i>
-            </button>
-        </div>
-        <div class="m-4 cursor-pointer flex flex-col items-center gap-1">
-            <span class="font-semibold text-xxs">Hãy dùng thử tiện ích mở rộng AI Chrome của chúng tôi</span>
-            <img class="border border-dark-5 rounded hover:bg-ds-light-400" height="49"
-                src="https://cf.quizizz.com/img/quizizz_ai/ai_extension_banner.webp" width="160">
-        </div>
-    </div>
 </div>
+</div>
+<button
+    class="transition-colors duration-200 ease-in-out flex items-center justify-center px-2 py-1.5 text-xs font-semibold h-full bg-super-20% text-super-dark hover:text-super-light active:text-super-dark rounded-2xl">
+    Nâng cấp ngay bây giờ
+</button>
+</div>
+<div class="mb-4 relative block w-full" style="padding-left: 0.5rem; padding-right: 1.5rem;">
+    <a href="/create_quizz"
+        class="transition-colors duration-200 ease-in-out flex flex items-center justify-center px-7.5 py-2.5 text-lg font-semibold q-shadow mb-1 h-10 base bg-lilac text-light-3 hover:bg-lilac-light active:bg-lilac-dark rounded-lg primary relative min-w-max w-full open-modal-button"
+        data-target="#modal-layer-2">
+        <i class="flex items-center fas fa-sparkles mr-2" style="font-size: 16px;"></i>
+        <span class="title" title="Tạo mới">Tạo mới</span>
+    </a>
+</div>
+</div>
+<div class="sidebar-navigation flex flex-col overflow-y-auto justify-between h-full">
+    <a href="/admin"
+        class="link flex items-center pl-4 whitespace-nowrap w-full hover:bg-light-1 cursor-pointer py-2 text-dark-4">
+        <i class="flex items-center fal fa-map-marked-alt" style="font-size: 12px;"></i>
+        <span class="text-sm whitespace-nowrap pl-1">Khám phá</span>
+    </a>
+    <a href="/my-quizzes"
+        class="link flex items-center pl-4 whitespace-nowrap w-full hover:bg-light-1 cursor-pointer py-2 text-dark-4 open-modal-button"
+        data-target="#modal-layer-2">
+        <i class="flex items-center fal fa-books" style="font-size: 12px;"></i>
+        <span class="text-sm whitespace-nowrap pl-1">Thư viện của tôi</span>
+    </a>
 
+    <a href="/admin/reports"
+        class="link flex items-center pl-4 whitespace-nowrap w-full hover:bg-light-1 cursor-pointer py-2 text-dark-4">
+        <i class="flex items-center fal fa-analytics" style="font-size: 12px;"></i>
+        <span class="text-sm whitespace-nowrap pl-1">Báo cáo</span>
+    </a>
+    <a href="/courses"
+        class="link flex items-center pl-4 whitespace-nowrap w-full hover:bg-light-1 cursor-pointer py-2 text-dark-4">
+        <i class="flex items-center fal fa-users-class" style="font-size: 12px;"></i>
+        <span class="text-sm whitespace-nowrap pl-1">Các lớp học</span>
+    </a>
+    <a href="/settings"
+        class="link flex items-center pl-4 whitespace-nowrap w-full hover:bg-light-1 cursor-pointer py-2 text-dark-4">
+        <i class="flex items-center fal fa-cog" style="font-size: 12px;"></i>
+        <span class="text-sm whitespace-nowrap pl-1">Cài đặt</span>
+    </a>
+    @auth
+        <button type="button" onclick="document.getElementById('logout-form').submit();"
+            class="link flex items-center pl-4 whitespace-nowrap w-full hover:bg-light-1 cursor-pointer py-2 text-dark-4"
+            aria-label="Đăng xuất">
+            <div class="flex items-center justify-center w-6">
+                <i class="flex items-center far fa-sign-out" style="font-size: 12px;"></i>
+            </div>
+            <span class="text-sm whitespace-nowrap pl-1">Đăng xuất</span>
+        </button>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    @endauth
+
+    <button aria-label="Ít hơn"
+        class="link flex w-full items-center py-2 pl-4 hover:bg-dark-5% cursor-pointer text-dark-3"
+        data-testid="sidebar-desktop-more-button" type="button">
+        <i class="flex items-center fal fa-chevron-down" style="font-size: 12px;"></i>
+    </button>
+</div>
+<div class="m-4 cursor-pointer flex flex-col items-center gap-1">
+    <span class="font-semibold text-xxs">Hãy dùng thử tiện ích mở rộng AI Chrome của chúng tôi</span>
+    <img class="border border-dark-5 rounded hover:bg-ds-light-400" height="49"
+        src="https://cf.quizizz.com/img/quizizz_ai/ai_extension_banner.webp" width="160">
+</div>
+</div>
+</div>
+@else
+<aside class="main-navigation-mini flex h-full main-nav">
+    <aside data-testid="mini-sidebar"
+        class="main-nav border border-dark-6 shadow flex flex-col items-center gap-y-6 bg-light-3 h-full"><a
+            href="/" class="flex flex-col items-center gap-y-2"><img
+                src="https://cf.quizizz.com/image/Q-brand-logo.png" alt="Quizizz" class="my-4 mx-3" height="30"
+                width="30"></a><a href="/profile/6530d670aa3baa53fa6a0f02?section=library"
+            class="flex flex-col items-center gap-y-2">
+            <div class="w-8 h-8 rounded-full overflow-hidden v-popper--has-tooltip">
+                <div class="vi-image w-full h-full object-cover v-image"><img
+                        src="https://lh3.googleusercontent.com/a/ACg8ocIDTXDAWTTdAYcxsGmX1kNs8fPGtdtW4pR_IyC0l3H_EFMB7A=s96-c?w=90&amp;h=90"
+                        data-testid="" class="lazy-img rounded-inherit object-cover w-full h-full" alt="Quiz image"
+                        loading="lazy"></div><!----><!---->
+            </div>
+            <div translate="no"
+                class="lozenge items-center inline-flex text-tn font-semibold rounded-full px-1.5 bg-lilac-faded text-lilac">
+                <!----><!----><span class=""></span>
+            </div>
+        </a><button
+            class="transition-colors duration-200 ease-in-out flex items-center justify-center w-8 h-8 base bg-lilac text-light-3 hover:bg-lilac-light active:bg-lilac-dark rounded primary relative min-w-max flex-shrink-0 v-popper--has-tooltip"
+            aria-label="" type="button" translate="no" data-testid="generic-button"><i
+                class="flex items-center far fa-circle-plus" style="font-size: 12px;"></i><!----><span class="title"
+                title=""></span><!----><!----><!----><!----><!----><!----></button>
+        <div class="flex flex-col w-full"><a href="/admin"
+                class="w-full py-2 text-center hover:bg-dark-6 v-popper--has-tooltip"><i
+                    class="flex items-center far fa-map-marked-alt text-dark-4"
+                    style="font-size: 12px;"></i></a><!----><a href="/my-quizzes"
+                class="w-full py-2 text-center hover:bg-dark-6 v-popper--has-tooltip" id="my-library-nav-item"><i
+                    class="flex items-center far fa-books text-dark-4" style="font-size: 12px;"></i></a>
+                   <i
+                    class="flex items-center far fa-analytics text-dark-4" style="font-size: 12px;"></i></a><!----><a
+                href="/school?ctaSource=school_btn"
+                class="w-full py-2 text-center hover:bg-dark-6 v-popper--has-tooltip"><i
+                    class="flex items-center far fa-school-circle-check text-dark-4"
+                    style="font-size: 12px;"></i></a><a href="/admin/classes?ctaSource=classes_btn"
+                class="w-full py-2 text-center hover:bg-dark-6 v-popper--has-tooltip"><i
+                    class="flex items-center far fa-users-class text-dark-4" style="font-size: 12px;"></i></a>
+                   <i
+                    class="flex items-center far fa-chart-user text-dark-4" style="font-size: 12px;"></i></a><a
+                href="/settings?ctaSource=settings_btn"
+                class="w-full py-2 text-center hover:bg-dark-6 v-popper--has-tooltip"><i
+                    class="flex items-center far fa-gear text-dark-4"
+                    style="font-size: 12px;"></i></a><!----><!----><!----><button type="button"
+                class="py-2 text-dark-4 hover:bg-dark-6 v-popper--has-tooltip"><i
+                    class="flex items-center far fa-chevron-down transition-transform"
+                    style="font-size: 12px;"></i></button></div><!---->
+    </aside>
+</aside>
+@endif
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('modal-layer-2');
@@ -299,8 +341,7 @@
         const openModalButtons = document.querySelectorAll('.open-modal-button');
         openModalButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
-                        e.preventDefault(); // Prevent default link behavior
-
+                        e.preventDefault();
                         @auth
                         window.location.href = button.getAttribute('href');
                     @else

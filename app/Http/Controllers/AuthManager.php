@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use GuzzleHttp\Client;
+use Carbon\Carbon;
 
 class AuthManager extends Controller
 {
@@ -36,18 +38,42 @@ class AuthManager extends Controller
     public function loginPost(Request $rq)
     {
         $rq->validate([
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        $credentials = $rq->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            $rq->session()->put('user_id', Auth::id());
-
-            return redirect()->intended(route('frontend.index'))->with("success", "Login success");
+        // Check if the user is already logged in
+        if (Auth::check()) {
+            return redirect()->intended(route('frontend.index'))->with('success', 'Already logged in');
         }
+
+        $credentials = $rq->only('email', 'password');
+
+        // Attempt to authenticate the user
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            // Create a token for the user
+            $tokenResult = $user->createToken('Personal Access Token');
+            $token = $tokenResult->token;
+            // Set expiration time for the token if needed
+            if ($rq->has('remember_me')) {
+                $token->expires_at = Carbon::now()->addWeeks(1);
+            }
+            $token->save();
+
+            // Store user ID in session
+            $rq->session()->put('user_id', $user->id);
+
+            // Redirect to the home page
+            return redirect()->intended(route('frontend.index'))->with('success', 'Login success');
+        }
+
+        // If authentication fails
         return redirect(route('login'))->with("error", "Login details are not valid");
     }
+
+
 
 
     function registrationPost(Request $rq)
@@ -76,11 +102,19 @@ class AuthManager extends Controller
 
     public function logout(Request $rq)
     {
+        if ($user = $rq->user()) {
+            $tokens = $user->tokens;
+            if ($tokens->isNotEmpty()) {
+                foreach ($tokens as $token) {
+                    $token->revoke(); 
+                }
+        }
+
         Auth::logout();
         $rq->session()->invalidate();
         $rq->session()->regenerateToken();
-        $rq->session()->forget('user_id');
 
         return redirect('/');
     }
+}
 }

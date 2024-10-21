@@ -70,7 +70,7 @@
                                             class="d-flex justify-content-center align-items-center thumb-md bg-info-subtle text-info rounded-circle me-2">
                                             <i class="fab fa-twitter align-self-center"></i>
                                         </a>
-                                        <a href="#"
+                                        <a href="/login/google"
                                             class="d-flex justify-content-center align-items-center thumb-md bg-danger-subtle text-danger rounded-circle">
                                             <i class="fab fa-google align-self-center"></i>
                                         </a>
