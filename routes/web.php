@@ -1,17 +1,18 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\frontend\HomeController;
 use App\Http\Controllers\frontend\QuizManagementController;
 use App\Http\Controllers\frontend\QuestionController;
 use App\Http\Controllers\frontend\QuizController;
+use App\Http\Controllers\frontend\CourseController;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\AuthController;
 use App\Http\Controllers\AuthManager;
+use App\Http\Controllers\Auth\SocialLoginController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('frontend.index');
-
-
 Route::get('/my-quizzes', [QuizManagementController::class, 'myQuizzes'])->name('quizzes.my');
 
 Route::get('/admin', [AuthController::class, 'login'])->name('auth.admin');
@@ -31,6 +32,13 @@ Route::post('/login', [AuthManager::class, 'loginPost'])->name('login.post');
 // Route::get('/registration', [AuthManager::class,'registration'])->name('registration');
 Route::post('/registration', [AuthManager::class, 'registrationPost'])->name('registration.post');
 Route::post('/logout', [AuthManager::class, 'logout'])->name('logout');
+
+Route::middleware(['web'])->group(function () {
+    Route::get('login/google', [SocialLoginController::class, 'redirectToGoogle'])->name('login.google');
+    Route::get('/auth/callback/google', [SocialLoginController::class, 'handleGoogleCallback']);
+    // Thêm các route khác nếu cần
+});
+
 
 // quizz
 Route::get('/create_quizz', [QuizManagementController::class, 'showQuizForm'])->name('frontend.create_quizz');
@@ -80,5 +88,18 @@ Route::prefix(prefix: 'quizzes')->group(function () {
     Route::post('submit-answer', [QuizController::class, 'submitAnswer'])->name('quizzes.submitAnswer');
     Route::get('{quiz}/results', [QuizController::class, 'showResults'])->name('quizzes.results');
 });
+
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+
+
+
+// Course 
+Route::get('/courses', [CourseController::class, 'index'])->name('quizzes.view');
+// Laravel web.php
+Route::get('/courses/{any}', function () {
+    return view('courses.index');
+})->where('any', '.*');
+
+
 
 Route::get('/test', [QuizManagementController::class, 'test'])->name('quiz.test');
