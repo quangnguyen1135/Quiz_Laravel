@@ -7,12 +7,21 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-Step 1: composer install
+# Laravel Project Setup
+
+## Step 1: Install Dependencies and Setup Environment
+Run the following commands:
+
+```bash
+composer install
 php artisan key:generate
 php artisan config:clear
 php artisan cache:clear
 
 php artisan serve
+```
+## Step 2: Create symbolic link
 
-Step 2:create symbolic link
+```bash
 php artisan storage:link
+```
